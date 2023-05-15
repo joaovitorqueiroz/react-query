@@ -1,20 +1,17 @@
 import React from 'react';
-import {SafeAreaView, Text, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
+import {UserList} from '../components';
 
 const Home = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Home</Text>
+      <UserList />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  container: {flex: 1},
 });
 
 export default Home;
