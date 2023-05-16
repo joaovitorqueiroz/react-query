@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   FlatList,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {User} from '../models';
+import {getUserList} from '../services/api/user';
 
 type Props = {
   user: User;
@@ -25,29 +26,49 @@ const UserItem = ({user, onPress}: Props) => (
 );
 
 const UserList = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(undefined);
+  const [data, setData] = useState<User[]>();
+
+  useEffect(() => {
+    setIsLoading(true);
+    getUserList()
+      .then(_data => {
+        setError(undefined);
+        setData(_data);
+      })
+      .catch(_error => setError(_error))
+      .finally(() => setIsLoading(false));
+  }, []);
+
   const navigation = useNavigation();
   const onPress = (id: string) => {
     navigation.navigate('details', {id});
   };
 
-  const users = [
-    {
-      createdAt: '2023-05-14T12:50:12.164Z',
-      name: 'Kenny Connelly',
-      avatar:
-        'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/182.jpg',
-      bio: 'Quam quasi dolor fuga deserunt tenetur sed ab tempore voluptatem. Id quidem aliquid vel beatae dolore. Nam deserunt ratione perferendis aut pariatur. Voluptatem maxime esse sed quae itaque. Neque esse at praesentium voluptatum magnam.',
-      id: '4',
-    },
-  ];
+  if (isLoading) {
+    return (
+      <View style={styles.containerContent}>
+        <Text>Carregando...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.containerContent}>
+        <Text>Ops... Algo deu errado!</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}> Lista de usuário</Text>
       <FlatList
-        data={users}
+        data={data}
         renderItem={({item}) => <UserItem user={item} onPress={onPress} />}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id}
         style={styles.containerFlatList}
       />
     </View>
@@ -57,6 +78,11 @@ const UserList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  containerContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   containerFlatList: {
     flex: 1,

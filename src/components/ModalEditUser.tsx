@@ -11,8 +11,8 @@ import {User} from '../models';
 
 type EditUserModalProps = {
   isVisible: boolean;
-  user: User;
-  onSave: (updatedUser: User) => void;
+  user: User | undefined;
+  onSave: (updatedUser: any) => void;
   onCancel: () => void;
 };
 
@@ -22,11 +22,11 @@ const EditUserModal = ({
   onSave,
   onCancel,
 }: EditUserModalProps) => {
-  const [name, setName] = useState<string>(user.name);
-  const [bio, setBio] = useState<string>(user.bio);
+  const [name, setName] = useState<string>(user?.name || '');
+  const [bio, setBio] = useState<string>(user?.bio || '');
 
   const handleSave = () => {
-    const updatedUser: User = {...user, name, bio};
+    const updatedUser = {id: user?.id, name, bio};
     onSave(updatedUser);
   };
 

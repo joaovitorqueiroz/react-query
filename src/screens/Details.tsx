@@ -1,12 +1,40 @@
-import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
 import {UserDetails, ModalEditUser} from '../components';
 import {User} from '../models';
+import {EditUser, editUser, getUserDetail} from '../services/api/user';
+import {useRoute} from '@react-navigation/native';
+import {DetailsParams} from '../@types/navigation';
 
 const Details = () => {
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(undefined);
+  const [data, setData] = useState<User>();
 
-  const onSave = () => {
+  const route = useRoute();
+  const {id} = route.params as DetailsParams;
+
+  const fetch = useCallback(() => {
+    setIsLoading(true);
+    getUserDetail(id)
+      .then(_data => {
+        setError(undefined);
+        setData(_data);
+      })
+      .catch(_error => setError(_error))
+      .finally(() => setIsLoading(false));
+  }, [id]);
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
+
+  const onSave = (user: EditUser) => {
+    editUser(user).then(() => {
+      fetch();
+    });
+
     setShowModal(false);
   };
 
@@ -18,17 +46,28 @@ const Details = () => {
     setShowModal(true);
   };
 
+  if (isLoading) {
+    return (
+      <View style={styles.containerContent}>
+        <Text>Carregando...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.containerContent}>
+        <Text>Ops... Algo deu errado!</Text>
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <UserDetails onEdit={onEdit} />
+      <UserDetails onEdit={onEdit} user={data} />
       <ModalEditUser
         isVisible={showModal}
-        user={
-          {
-            name: 'teste',
-            bio: 'dasdsadas',
-          } as User
-        }
+        user={data}
         onCancel={onCancel}
         onSave={onSave}
       />
@@ -37,7 +76,14 @@ const Details = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1},
+  container: {
+    flex: 1,
+  },
+  containerContent: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default Details;

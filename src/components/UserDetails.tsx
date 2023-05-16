@@ -1,26 +1,19 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Avatar from './Avatar';
+import {User} from '../models';
 
 type UserDetailsProps = {
   onEdit: () => void;
+  user: User | undefined;
 };
 
-const UserDetails = ({onEdit}: UserDetailsProps) => {
-  const user = {
-    createdAt: '2023-05-14T12:50:12.164Z',
-    name: 'Kenny Connelly',
-    avatar:
-      'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/182.jpg',
-    bio: 'Quam quasi dolor fuga deserunt tenetur sed ab tempore voluptatem. Id quidem aliquid vel beatae dolore. Nam deserunt ratione perferendis aut pariatur. Voluptatem maxime esse sed quae itaque. Neque esse at praesentium voluptatum magnam.',
-    id: '4',
-  };
-
+const UserDetails = ({onEdit, user}: UserDetailsProps) => {
   return (
     <View style={styles.container}>
-      <Avatar />
-      <Text style={styles.userName}>{user.name}</Text>
-      <Text style={styles.bioInput}>{user.bio}</Text>
+      <Avatar url={user?.avatar} />
+      <Text style={styles.userName}>{user?.name}</Text>
+      <Text style={styles.bioInput}>{user?.bio}</Text>
 
       <TouchableOpacity style={styles.editButton} onPress={onEdit}>
         <Text style={styles.buttonText}>Editar</Text>
