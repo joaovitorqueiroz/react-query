@@ -1,7 +1,32 @@
-const BASE_URL = 'https://6461a41f185dd9877e4045e7.mockapi.io';
+import {User} from '../../models';
+import client from '../client';
 
-const getUserList = () => fetch(`${BASE_URL}/user`);
+function delay(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-const getUserDetail = (id: string) => fetch(`${BASE_URL}/user/${id}`);
+const getUserList = () =>
+  client.get<User[]>('/user').then(async res => {
+    await delay(2000);
+    return res.data;
+  });
 
-export default {getUserList, getUserDetail};
+const getUserDetail = (id: string): Promise<User> =>
+  client.get<User>(`/user/${id}`).then(async res => {
+    await delay(2000);
+    return res.data;
+  });
+
+export type EditUser = {
+  id: string;
+  name?: string;
+  bio?: string;
+};
+
+const editUser = (user: EditUser) =>
+  client.put(`/user/${user.id}`, user).then(async res => {
+    await delay(200);
+    return res.data;
+  });
+
+export {getUserList, getUserDetail, editUser};
