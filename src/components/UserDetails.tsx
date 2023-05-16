@@ -1,7 +1,12 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import Avatar from './Avatar';
 
-const UserDetailsScreen = () => {
+type UserDetailsProps = {
+  onEdit: () => void;
+};
+
+const UserDetails = ({onEdit}: UserDetailsProps) => {
   const user = {
     createdAt: '2023-05-14T12:50:12.164Z',
     name: 'Kenny Connelly',
@@ -13,9 +18,13 @@ const UserDetailsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.avatar} source={{uri: user.avatar}} />
+      <Avatar />
       <Text style={styles.userName}>{user.name}</Text>
       <Text style={styles.bioInput}>{user.bio}</Text>
+
+      <TouchableOpacity style={styles.saveButton} onPress={onEdit}>
+        <Text style={styles.buttonText}>Edit</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -25,12 +34,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 20,
-  },
-  avatar: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    marginBottom: 20,
   },
   userName: {
     fontSize: 20,
@@ -46,6 +49,18 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlignVertical: 'center',
   },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  saveButton: {
+    backgroundColor: '#87aade',
+    marginTop: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
 });
 
-export default UserDetailsScreen;
+export default UserDetails;
