@@ -10,6 +10,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {User} from '../models';
 import {getUserList} from '../services/api/user';
+import Time from './Time';
 
 type Props = {
   user: User;
@@ -65,6 +66,7 @@ const UserList = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}> Lista de usuário</Text>
+      <Time />
       <FlatList
         data={data}
         renderItem={({item}) => <UserItem user={item} onPress={onPress} />}
