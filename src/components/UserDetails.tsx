@@ -22,8 +22,8 @@ const UserDetails = ({onEdit}: UserDetailsProps) => {
       <Text style={styles.userName}>{user.name}</Text>
       <Text style={styles.bioInput}>{user.bio}</Text>
 
-      <TouchableOpacity style={styles.saveButton} onPress={onEdit}>
-        <Text style={styles.buttonText}>Edit</Text>
+      <TouchableOpacity style={styles.editButton} onPress={onEdit}>
+        <Text style={styles.buttonText}>Editar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
-  saveButton: {
+  editButton: {
     backgroundColor: '#87aade',
     marginTop: 20,
     paddingVertical: 10,

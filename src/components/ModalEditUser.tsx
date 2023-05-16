@@ -34,7 +34,7 @@ const EditUserModal = ({
     <Modal visible={isVisible} animationType="fade" transparent>
       <View style={styles.container}>
         <View style={styles.modalContent}>
-          <Text style={styles.title}>Edit User</Text>
+          <Text style={styles.title}>Editar usuário</Text>
           <TextInput
             style={styles.input}
             placeholder="Name"
@@ -50,10 +50,10 @@ const EditUserModal = ({
           />
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
-              <Text style={styles.buttonTextCancel}>Cancel</Text>
+              <Text style={styles.buttonTextCancel}>Cancelar</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-              <Text style={styles.buttonText}>Save</Text>
+              <Text style={styles.buttonText}>Salvar</Text>
             </TouchableOpacity>
           </View>
         </View>

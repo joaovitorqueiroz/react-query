@@ -20,7 +20,14 @@ export function AppRoutes() {
           headerShown: false,
         }}
       />
-      <Screen name="details" component={Details} />
+      <Screen
+        name="details"
+        component={Details}
+        options={{
+          headerBackTitle: 'Voltar',
+          title: 'Perfil',
+        }}
+      />
     </Navigator>
   );
 }

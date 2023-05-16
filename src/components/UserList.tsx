@@ -43,7 +43,7 @@ const UserList = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}> Lista de Usuarios</Text>
+      <Text style={styles.headerText}> Lista de usuário</Text>
       <FlatList
         data={users}
         renderItem={({item}) => <UserItem user={item} onPress={onPress} />}
