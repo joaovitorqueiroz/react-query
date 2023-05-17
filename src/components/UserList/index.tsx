@@ -1,16 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  FlatList,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {View, FlatList, Text, Image, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {User} from '../models';
-import {getUserList} from '../services/api/user';
-// import Time from './Time';
+import {User} from '../../models';
+import {getUserList} from '../../services/api/user';
+import styles from './styles';
+import Time from '../Time';
 
 type Props = {
   user: User;
@@ -66,7 +60,7 @@ const UserList = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}> Lista de usuário</Text>
-      {/* <Time /> */}
+      <Time />
       <FlatList
         data={data}
         renderItem={({item}) => <UserItem user={item} onPress={onPress} />}
@@ -76,39 +70,5 @@ const UserList = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  containerContent: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  containerFlatList: {
-    flex: 1,
-    padding: 20,
-  },
-  headerText: {
-    alignSelf: 'center',
-    fontSize: 24,
-  },
-  userItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 5,
-  },
-  avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 10,
-  },
-  userName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
 
 export default UserList;

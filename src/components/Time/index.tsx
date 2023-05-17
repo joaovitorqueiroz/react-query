@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import {getTime} from '../services/api/time';
+import {Text, View} from 'react-native';
+import {getTime} from '../../services/api/time';
+import styles from './styles';
 
 const Time = () => {
   const [time, setTime] = useState<string>();
@@ -20,9 +21,4 @@ const Time = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
-});
 export default Time;

@@ -1,10 +1,11 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
-import {UserDetails, ModalEditUser} from '../components';
-import {User} from '../models';
-import {EditUser, editUser, getUserDetail} from '../services/api/user';
+import {View, Text, SafeAreaView} from 'react-native';
+import {UserDetails, ModalEditUser} from '../../components';
+import {User} from '../../models';
+import {EditUser, editUser, getUserDetail} from '../../services/api/user';
 import {useRoute} from '@react-navigation/native';
-import {DetailsParams} from '../@types/navigation';
+import {DetailsParams} from '../../@types/navigation';
+import styles from './styles';
 
 const Details = () => {
   const [showModal, setShowModal] = useState(false);
@@ -74,16 +75,5 @@ const Details = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  containerContent: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default Details;
