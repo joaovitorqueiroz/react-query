@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {View, FlatList, Text, Image, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {User} from '../../models';
-import {getUserList} from '../../services/api/user';
 import styles from './styles';
-import Time from '../Time';
+//import Time from '../Time';
+import {useGetUserList} from '../../queries/user';
 
 type Props = {
   user: User;
@@ -21,20 +21,7 @@ const UserItem = ({user, onPress}: Props) => (
 );
 
 const UserList = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(undefined);
-  const [data, setData] = useState<User[]>();
-
-  useEffect(() => {
-    setIsLoading(true);
-    getUserList()
-      .then(_data => {
-        setError(undefined);
-        setData(_data);
-      })
-      .catch(_error => setError(_error))
-      .finally(() => setIsLoading(false));
-  }, []);
+  const {isLoading, isError, data} = useGetUserList();
 
   const navigation = useNavigation();
   const onPress = (id: string) => {
@@ -49,7 +36,7 @@ const UserList = () => {
     );
   }
 
-  if (error) {
+  if (isError) {
     return (
       <View style={styles.containerContent}>
         <Text>Ops... Algo deu errado!</Text>
@@ -60,7 +47,7 @@ const UserList = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}> Lista de usuário</Text>
-      <Time />
+      {/* <Time /> */}
       <FlatList
         data={data}
         renderItem={({item}) => <UserItem user={item} onPress={onPress} />}
