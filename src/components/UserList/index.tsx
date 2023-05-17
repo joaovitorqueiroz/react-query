@@ -3,7 +3,7 @@ import {View, FlatList, Text, Image, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {User} from '../../models';
 import styles from './styles';
-//import Time from '../Time';
+import Time from '../Time';
 import {useGetUserList} from '../../queries/user';
 
 type Props = {
@@ -47,7 +47,7 @@ const UserList = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}> Lista de usuário</Text>
-      {/* <Time /> */}
+      <Time />
       <FlatList
         data={data}
         renderItem={({item}) => <UserItem user={item} onPress={onPress} />}

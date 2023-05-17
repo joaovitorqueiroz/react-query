@@ -1,18 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Text, View} from 'react-native';
-import {getTime} from '../../services/api/time';
 import styles from './styles';
+import {useGetTime} from '../../queries/timer';
 
 const Time = () => {
-  const [time, setTime] = useState<string>();
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      getTime().then(_time => setTime(_time));
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const {data: time} = useGetTime();
 
   return (
     <View style={styles.container}>
