@@ -1,17 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {View, FlatList, Text, Image, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {User} from '../../models';
-import {getUserList} from '../../services/api/user';
 import styles from './styles';
-import Time from '../Time';
+//import Time from '../Time';
 
-type Props = {
+type UserItemProps = {
   user: User;
   onPress: (id: string) => void;
 };
 
-const UserItem = ({user, onPress}: Props) => (
+const UserItem = ({user, onPress}: UserItemProps) => (
   <TouchableOpacity onPress={() => onPress(user.id)}>
     <View style={styles.userItem}>
       <Image style={styles.avatar} source={{uri: user.avatar}} />
@@ -20,49 +18,18 @@ const UserItem = ({user, onPress}: Props) => (
   </TouchableOpacity>
 );
 
-const UserList = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(undefined);
-  const [data, setData] = useState<User[]>();
+type UserListProps = {
+  user: User;
+  onPress: (id: string) => void;
+};
 
-  useEffect(() => {
-    setIsLoading(true);
-    getUserList()
-      .then(_data => {
-        setError(undefined);
-        setData(_data);
-      })
-      .catch(_error => setError(_error))
-      .finally(() => setIsLoading(false));
-  }, []);
-
-  const navigation = useNavigation();
-  const onPress = (id: string) => {
-    navigation.navigate('details', {id});
-  };
-
-  if (isLoading) {
-    return (
-      <View style={styles.containerContent}>
-        <Text>Carregando...</Text>
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <View style={styles.containerContent}>
-        <Text>Ops... Algo deu errado!</Text>
-      </View>
-    );
-  }
-
+const UserList = ({users, onPress}: UserListProps) => {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}> Lista de usuário</Text>
-      <Time />
+      {/* <Time /> */}
       <FlatList
-        data={data}
+        data={users}
         renderItem={({item}) => <UserItem user={item} onPress={onPress} />}
         keyExtractor={item => item.id}
         style={styles.containerFlatList}
