@@ -7,14 +7,20 @@ const useGetUserList = () => {
   return useQuery([QUERY_KEY_USER_LIST], getUserList);
 };
 
-const QUERY_KEY_USER_Details = 'user-details';
+const QUERY_KEY_USER_DETAILS = 'user-details';
 
 const useGetUserDetails = (id: string) => {
-  return useQuery([QUERY_KEY_USER_Details, id], () => getUserDetail(id));
+  return useQuery([QUERY_KEY_USER_DETAILS, id], () => getUserDetail(id));
 };
 
 const useEditUser = () => {
   return useMutation({mutationFn: editUser});
 };
 
-export {useGetUserList, useGetUserDetails, useEditUser};
+export {
+  useGetUserList,
+  useGetUserDetails,
+  useEditUser,
+  QUERY_KEY_USER_LIST,
+  QUERY_KEY_USER_DETAILS,
+};
