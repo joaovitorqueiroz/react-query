@@ -1,17 +1,15 @@
 import React from 'react';
 import {View, FlatList, Text, Image, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {User} from '../../models';
 import styles from './styles';
 import Time from '../Time';
-import {useGetUserList} from '../../queries/user';
 
-type Props = {
+type UserItemProps = {
   user: User;
   onPress: (id: string) => void;
 };
 
-const UserItem = ({user, onPress}: Props) => (
+const UserItem = ({user, onPress}: UserItemProps) => (
   <TouchableOpacity onPress={() => onPress(user.id)}>
     <View style={styles.userItem}>
       <Image style={styles.avatar} source={{uri: user.avatar}} />
@@ -20,36 +18,18 @@ const UserItem = ({user, onPress}: Props) => (
   </TouchableOpacity>
 );
 
-const UserList = () => {
-  const {isLoading, isError, data} = useGetUserList();
+type UserListProps = {
+  users: User[];
+  onPress: (id: string) => void;
+};
 
-  const navigation = useNavigation();
-  const onPress = (id: string) => {
-    navigation.navigate('details', {id});
-  };
-
-  if (isLoading) {
-    return (
-      <View style={styles.containerContent}>
-        <Text>Carregando...</Text>
-      </View>
-    );
-  }
-
-  if (isError) {
-    return (
-      <View style={styles.containerContent}>
-        <Text>Ops... Algo deu errado!</Text>
-      </View>
-    );
-  }
-
+const UserList = ({users, onPress}: UserListProps) => {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}> Lista de usuário</Text>
       <Time />
       <FlatList
-        data={data}
+        data={users}
         renderItem={({item}) => <UserItem user={item} onPress={onPress} />}
         keyExtractor={item => item.id}
         style={styles.containerFlatList}

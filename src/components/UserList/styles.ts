@@ -4,11 +4,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  containerContent: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   containerFlatList: {
     flex: 1,
     padding: 20,
