@@ -1,5 +1,5 @@
-import {useQuery} from '@tanstack/react-query';
-import {getUserList, getUserDetail} from '../../services/api/user';
+import {useQuery, useMutation} from '@tanstack/react-query';
+import {getUserList, getUserDetail, editUser} from '../../services/api/user';
 
 const QUERY_KEY_USER_LIST = 'user-list';
 
@@ -13,4 +13,8 @@ const useGetUserDetails = (id: string) => {
   return useQuery([QUERY_KEY_USER_Details, id], () => getUserDetail(id));
 };
 
-export {useGetUserList, useGetUserDetails};
+const useEditUser = () => {
+  return useMutation({mutationFn: editUser});
+};
+
+export {useGetUserList, useGetUserDetails, useEditUser};
