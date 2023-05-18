@@ -19,7 +19,7 @@ const UserItem = ({user, onPress}: UserItemProps) => (
 );
 
 type UserListProps = {
-  user: User;
+  users: User[] | undefined;
   onPress: (id: string) => void;
 };
 
